@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model roles {
+  id    Int     @id @default(autoincrement())
+  role  String? @db.VarChar(50)
+  users users?
+}
+
+model users {
+  id        Int        @id @default(autoincrement())
+  username  String     @unique @db.VarChar(50)
+  email     String     @db.VarChar(50)
+  user_role Int?
+  password  String?    @db.VarChar
+  projects  projects[]
+  tasks     tasks[]
+  roles     roles      @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model projects {
+  id            Int      @id @default(autoincrement())
+  title         String   @unique @db.VarChar(250)
+  description   String   @db.VarChar(250)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  owner_user_id Int?
+  users         users?   @relation(fields: [owner_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+  tasks         tasks[]
+}
+
+model tasks {
+  id            Int       @id @default(autoincrement())
+  title         String    @db.VarChar(250)
+  description   String    @db.VarChar(500)
+  assigned_to   String    @db.VarChar(50)
+  severity      Int?
+  due_date      DateTime  @db.Date
+  project_id    Int?
+  owner_user_id Int?
+  task_type     String?   @db.VarChar
+  projects      projects? @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_project")
+  users         users?    @relation(fields: [owner_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+}
