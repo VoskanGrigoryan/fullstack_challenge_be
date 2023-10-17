@@ -16,6 +16,9 @@ export class ProjectsService {
   }
 
   findOne(id: number) {
+    // if (!id) {
+    //   return 'error';
+    // }
     return this.prisma.projects.findUnique({ where: { id } });
   }
 

@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsInt, Min, Max, IsString, Length } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsInt,
+  Min,
+  Max,
+  IsString,
+  Length,
+  IsBoolean,
+} from 'class-validator';
 
 export class CreateTaskDto {
   @IsNotEmpty()
@@ -23,9 +31,6 @@ export class CreateTaskDto {
   severity: number;
 
   @IsNotEmpty()
-  due_date: Date;
-
-  @IsNotEmpty()
   @IsInt()
   @Min(1)
   project_id: number;
@@ -38,4 +43,8 @@ export class CreateTaskDto {
   @IsNotEmpty()
   @IsString()
   task_type: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  active: boolean;
 }

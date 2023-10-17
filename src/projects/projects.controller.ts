@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -17,6 +18,7 @@ export class ProjectsController {
 
   @Post()
   create(@Body() createProjectDto: CreateProjectDto) {
+    console.log(createProjectDto);
     return this.projectsService.create(createProjectDto);
   }
 
@@ -27,7 +29,13 @@ export class ProjectsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.projectsService.findOne(+id);
+    const project = this.projectsService.findOne(+id);
+
+    if (!project) {
+      return new NotFoundException('No task was found with that id');
+    }
+
+    return project;
   }
 
   @Patch(':id')
