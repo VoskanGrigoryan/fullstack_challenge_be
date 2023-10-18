@@ -2,10 +2,7 @@
 
 $ npm install
 
-## Running the app
+# Running the app
 
-# watch mode
+## watch mode
 $ npm run start:dev
-
-## Test
-
