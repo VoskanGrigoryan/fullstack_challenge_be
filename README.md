@@ -1,15 +1,9 @@
 ## Installation
 
-```
 $ npm install
-```
 
-## Running the app
+# Running the app
 
-# development
-
-$ npm run start
-
-# watch mode
+## watch mode
 
 $ npm run start:dev
