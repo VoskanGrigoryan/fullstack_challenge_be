@@ -6,4 +6,4 @@ $ npm install
 
 ## watch mode
 
-$ npm run start:dev
+$ npm run start
